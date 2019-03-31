@@ -10,19 +10,40 @@ import { User } from '../../interfaces/user';
 })
 export class HomePage {
 
+  friends: User[];
+
   constructor(public navCtrl: NavController) {
-    let myUser: User = {
+    let usuario1: User = {
       nick: 'Henry Vilchez',
-      subnick: '@vilchola',
-      age: 32,
       email: 'roberto1286@gmail.com',
       friend: false,
       uid: 1
     };
-    let users: User[] = [
-      myUser
-    ];
-    console.log(myUser);
+    let usuario2: User = {
+      nick: 'Alejandro Vilchez',
+      email: 'ale181085@gmail.com',
+      friend: false,
+      uid: 2
+    };
+    let usuario3: User = {
+      nick: 'Sebastian Vilchez',
+      email: 'hsvbronco@hotmail.com',
+      friend: false,
+      uid: 3
+    };
+    let usuario4: User = {
+      nick: 'Francisco Vilchez',
+      email: 'francisco@elian.com',
+      friend: false,
+      uid: 4
+    };
+    let usuario5: User = {
+      nick: 'Daniela Henriquez',
+      email: 'daniela_henriquez04@hotmail.com',
+      friend: false,
+      uid: 5
+    };
+    this.friends = [usuario1, usuario2, usuario3, usuario4, usuario5];
   }
 
   goToConversation() {
