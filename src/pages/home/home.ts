@@ -46,8 +46,8 @@ export class HomePage {
     this.friends = [usuario1, usuario2, usuario3, usuario4, usuario5];
   }
 
-  goToConversation() {
-    this.navCtrl.push(ConversationPage);
+  goToConversation(user: User) {
+    this.navCtrl.push(ConversationPage, {user: user});
   }
 
   goToLogin() {

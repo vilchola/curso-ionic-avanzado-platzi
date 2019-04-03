@@ -8,7 +8,6 @@
 </ion-header>
 
 <ion-content padding>
-  <button ion-button (click)="goToConversation()">Ir a Conversation</button>
   <button ion-button (click)="goToLogin()">Ir a Login</button>
 
   <ion-list>
@@ -16,7 +15,7 @@
       <ion-label>Amigos</ion-label>
     </ion-list-header>
     <div *ngFor="let user of friends; let i = index">
-      <ion-item *ngIf="user.friend">
+      <ion-item *ngIf="user.friend" (click)="goToConversation(user)">
         <p>{{ i }}. {{user.nick}} - {{user.email}}</p>
       </ion-item>
     </div>
@@ -26,7 +25,7 @@
       <ion-label>No Agregados</ion-label>
     </ion-list-header>
     <div *ngFor="let user of friends; let i = index">
-      <ion-item *ngIf="!user.friend">
+      <ion-item *ngIf="!user.friend" (click)="goToConversation(user)">
         <p>{{ i }}. {{user.nick}} - {{user.email}}</p>
       </ion-item>
     </div>
