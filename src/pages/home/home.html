@@ -8,15 +8,13 @@
 </ion-header>
 
 <ion-content padding>
-  <button ion-button (click)="goToLogin()">Ir a Login</button>
   <ion-searchbar placeholder="Buscar..." [(ngModel)]="query"></ion-searchbar>
   <ion-list>
-    <ion-list-header>
-      <ion-label>Amigos</ion-label>
-    </ion-list-header>
-    <div *ngFor="let user of friends | search: query; let i = index">
+    <div *ngFor="let user of friends | search: query">
       <ion-item (click)="goToConversation(user)">
-        <p>{{ i }}. {{user.nick}} - {{user.email}}</p>
+        <ion-icon *ngIf="user.friend" name="contact" color="primary"></ion-icon>
+        <ion-icon *ngIf="!user.friend" name="person-add" color="primary"></ion-icon>
+        {{user.nick}}<p item-end>{{user.email}}</p>
       </ion-item>
     </div>
   </ion-list>
