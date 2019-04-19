@@ -15,4 +15,7 @@
 
 <ion-content padding>
   <button ion-button (click)="goBack()">Regresar</button>
+  <p>{{friend | json}}</p>
+  <p>{{price | number: '1.5-5'}}</p>
+  <p>{{today | date: 'fullDate'}}</p>
 </ion-content>
