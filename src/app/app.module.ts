@@ -12,6 +12,7 @@ import { LoginPageModule } from '../pages/login/login.module';
 import { ConversationPageModule } from '../pages/conversation/conversation.module';
 import { ProfilePageModule } from '../pages/profile/profile.module';
 import { AboutPageModule } from '../pages/about/about.module';
+import { UserProvider } from '../providers/user';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AboutPageModule } from '../pages/about/about.module';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    UserProvider
   ]
 })
 export class AppModule {}

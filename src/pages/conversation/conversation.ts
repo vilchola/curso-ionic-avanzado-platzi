@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { User } from '../../interfaces/user';
+import { UserProvider } from '../../providers/user';
 
 /**
  * Generated class for the ConversationPage page.
@@ -16,11 +17,18 @@ import { User } from '../../interfaces/user';
 })
 export class ConversationPage {
 
-  user: User;
+  friendId: any;
+  friends: User[];
+  friend: User;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.user = navParams.data.user || {};
-    console.log(`uid: ${this.user.uid}`);
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider) {
+    this.friendId = navParams.data.user.uid || undefined;
+    console.log(`friendId: ${this.friendId}`);
+    this.friends = this.userProvider.getFriends();
+    this.friend = this.friends.find((record) => {
+      return record.uid == this.friendId;
+    });
+    console.log(`friend: ${JSON.stringify(this.friend)}`);
   }
 
   ionViewDidLoad() {
