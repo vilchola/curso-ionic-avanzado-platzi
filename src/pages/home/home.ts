@@ -12,6 +12,7 @@ import { UserProvider } from '../../providers/user';
 export class HomePage {
 
   friends: User[];
+  query: string = '';
 
   constructor(public navCtrl: NavController, private userProvider: UserProvider) {
     this.friends = this.userProvider.getFriends();

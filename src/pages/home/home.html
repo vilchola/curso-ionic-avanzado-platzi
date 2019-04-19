@@ -9,23 +9,13 @@
 
 <ion-content padding>
   <button ion-button (click)="goToLogin()">Ir a Login</button>
-
+  <ion-searchbar placeholder="Buscar..." [(ngModel)]="query"></ion-searchbar>
   <ion-list>
     <ion-list-header>
       <ion-label>Amigos</ion-label>
     </ion-list-header>
-    <div *ngFor="let user of friends; let i = index">
-      <ion-item *ngIf="user.friend" (click)="goToConversation(user)">
-        <p>{{ i }}. {{user.nick}} - {{user.email}}</p>
-      </ion-item>
-    </div>
-  </ion-list>
-  <ion-list>
-    <ion-list-header>
-      <ion-label>No Agregados</ion-label>
-    </ion-list-header>
-    <div *ngFor="let user of friends; let i = index">
-      <ion-item *ngIf="!user.friend" (click)="goToConversation(user)">
+    <div *ngFor="let user of friends | search: query; let i = index">
+      <ion-item (click)="goToConversation(user)">
         <p>{{ i }}. {{user.nick}} - {{user.email}}</p>
       </ion-item>
     </div>
