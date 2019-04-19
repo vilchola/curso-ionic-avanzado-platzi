@@ -4,18 +4,48 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Home</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="royal">
+        <img src="assets/img/logo_live_add.png" class="icon-in-button">
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-searchbar placeholder="Buscar..." [(ngModel)]="query"></ion-searchbar>
-  <ion-list>
-    <div *ngFor="let user of friends | search: query">
-      <ion-item (click)="goToConversation(user)">
-        <ion-icon *ngIf="user.friend" name="contact" color="primary"></ion-icon>
-        <ion-icon *ngIf="!user.friend" name="person-add" color="primary"></ion-icon>
-        {{user.nick}}<p item-end>{{user.status}}</p>
-      </ion-item>
-    </div>
-  </ion-list>
+<ion-content padding class="backgroundPlatzinger">
+
+  <ion-grid id="homeMeContainer">
+    <ion-row>
+      <ion-col col-3>
+        <div class="avatarFrameOnline">
+          <img src="assets/img/generic_avatar.png" class="avatarImg img-fluid">
+        </div>
+      </ion-col>
+      <ion-col col-9>
+        Henry Vilchez<br/>
+        <small>@vilchola</small><br/>
+        <small><b>roberto1286@gmail.com</b></small><br/>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="searchBoxContainer">
+    <!--<ion-searchbar placeholder="Buscar..." [(ngModel)]="query"></ion-searchbar>-->
+    <ion-input type="search" id="searchField" placeholder="Buscar..." [(ngModel)]="query"></ion-input>
+  </div>
+
+  <div>
+    <ion-list>
+      <ion-list-header>
+        <b>Amigos</b>
+      </ion-list-header>
+      <div class="contact-list-item" *ngFor="let user of friends | search: query">
+        <ion-item (click)="goToConversation(user)">
+          <img src="assets/img/{{getIconByStatus(user.status)}}" class="status">
+          <b>{{user.nick}}</b> <i class="msnicon brb"></i>
+          <small *ngIf="user.status" item-end>{{ user.status }}</small>
+        </ion-item>
+      </div>
+    </ion-list>
+  </div>
 </ion-content>

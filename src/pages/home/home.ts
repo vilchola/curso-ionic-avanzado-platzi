@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ConversationPage } from '../conversation/conversation';
-import { LoginPage } from '../login/login';
-import { User } from '../../interfaces/user';
+import { User, Status } from '../../interfaces/user';
 import { UserProvider } from '../../providers/user';
 
 @Component({
@@ -22,8 +21,26 @@ export class HomePage {
     this.navCtrl.push(ConversationPage, {user: user});
   }
 
-  goToLogin() {
-    this.navCtrl.push(LoginPage);
+  getIconByStatus(status) {
+    let icon = '';
+    switch (status){
+      case Status.Online:
+        icon = 'logo_live_online.png';
+        break;
+      case Status.Offline:
+        icon = 'logo_live_offline.png';
+        break;
+      case Status.Busy:
+        icon = 'logo_live_busy.png';
+        break;
+      case Status.AppearOffline:
+        icon = 'logo_live_appear_offline.png';
+        break;
+      case Status.Away:
+        icon = 'logo_live_away.png';
+        break;
+    }
+    return icon;
   }
 
 }
