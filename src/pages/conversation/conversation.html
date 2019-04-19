@@ -7,15 +7,32 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Conversation</ion-title>
+    <ion-title>{{ friend.nick }}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-  <button ion-button (click)="goBack()">Regresar</button>
-  <p>{{friend | json}}</p>
-  <p>{{price | number: '1.5-5'}}</p>
-  <p>{{today | date: 'fullDate'}}</p>
+<ion-content padding class="backgroundPlatzinger">
+  <ion-fab right middle>
+    <button ion-fab><ion-icon name="send"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button outline ion-fab><img src="assets/img/zumbido.png"></button>
+    </ion-fab-list>
+    <ion-fab-list side="bottom">
+      <button color="dark" ion-fab><ion-icon name="camera"></ion-icon></button>
+      <button color="dark" ion-fab><ion-icon name="images"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-input type="text" class="footbarInput" placeholder="Escribe un mensaje" autofocus></ion-input>
+    <ion-buttons end>
+      <button ion-button icon-only color="royal">
+        <ion-icon name="send"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

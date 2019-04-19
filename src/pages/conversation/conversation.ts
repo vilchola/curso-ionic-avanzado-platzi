@@ -20,8 +20,6 @@ export class ConversationPage {
   friendId: any;
   friends: User[];
   friend: User;
-  price: number = 78.2341;
-  today: any = Date.now();
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider) {
     this.friendId = navParams.data.user.uid || undefined;
@@ -35,10 +33,6 @@ export class ConversationPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ConversationPage');
-  }
-
-  goBack() {
-    this.navCtrl.pop();
   }
 
 }
