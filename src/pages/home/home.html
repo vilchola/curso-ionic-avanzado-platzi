@@ -39,13 +39,11 @@
       <ion-list-header>
         <b>Amigos</b>
       </ion-list-header>
-      <div class="contact-list-item" *ngFor="let user of friends | search: query">
-        <ion-item (click)="goToConversation(user)">
-          <img src="assets/img/{{getIconByStatus(user.status)}}" class="status">
-          <b>{{user.nick}}</b> <i class="msnicon brb"></i>
-          <small *ngIf="user.status" item-end>{{ user.status }}</small>
-        </ion-item>
-      </div>
+      <ion-item class="contact-list-item" [ngClass]="{'contact-offline': isOffline(user.status)}" [ngStyle]="{'color': isOffline(user.status) ? 'red' : 'blue'}" *ngFor="let user of friends | search: query" (click)="goToConversation(user)">
+        <img src="assets/img/{{getIconByStatus(user.status)}}" class="status">
+        <b>{{user.nick}}</b> <i class="msnicon brb"></i>
+        <small *ngIf="user.status" item-end>{{ user.status }}</small>
+      </ion-item>
     </ion-list>
   </div>
 </ion-content>

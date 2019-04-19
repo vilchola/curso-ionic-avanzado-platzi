@@ -11,7 +11,8 @@ import { UserProvider } from '../../providers/user';
 export class HomePage {
 
   friends: User[];
-  query: string = '';
+  query: string;
+  status: Status;
 
   constructor(public navCtrl: NavController, private userProvider: UserProvider) {
     this.friends = this.userProvider.getFriends();
@@ -23,7 +24,7 @@ export class HomePage {
 
   getIconByStatus(status) {
     let icon = '';
-    switch (status){
+    switch (status) {
       case Status.Online:
         icon = 'logo_live_online.png';
         break;
@@ -41,6 +42,10 @@ export class HomePage {
         break;
     }
     return icon;
+  }
+
+  isOffline(status) {
+    return status == Status.Offline || status == Status.AppearOffline;
   }
 
 }
