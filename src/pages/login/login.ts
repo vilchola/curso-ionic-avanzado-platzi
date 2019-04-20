@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth';
 import { HomePage } from '../home/home';
 import { UserProvider } from '../../providers/user';
-import { Status } from '../../interfaces/user';
+import { User, Status } from '../../interfaces/user';
 
 /**
  * Generated class for the LoginPage page.
@@ -35,7 +35,7 @@ export class LoginPage {
     this.authProvider.loginWithEmail(this.email, this.password).then((data) => {
       console.log(`loginWithEmail: ${data}`);
       localStorage.setItem('loginData', JSON.stringify(data));
-      this.navCtrl.push(HomePage);
+      this.navCtrl.setRoot(HomePage);
     }).catch((error) => {
       console.log(`error on loginWithEmail: ${error}`);
     });
@@ -57,6 +57,30 @@ export class LoginPage {
       });
     }).catch((error) => {
       console.log(`error on registerWithEmail: ${error}`);
+    });
+  }
+
+  loginWithFacebook() {
+    this.authProvider.facebookLogin().then((data) => {
+      console.log(`facebookLogin: ${data}`);
+      localStorage.setItem('loginData', JSON.stringify(data));
+      if (data.additionalUserInfo.isNewUser) {
+        const user:User = {
+          nick: data.additionalUserInfo.profile.first_name + ' ' + data.additionalUserInfo.profile.last_name,
+          email: data.additionalUserInfo.profile.email,
+          friend: false,
+          uid: data.user.uid,
+          status: Status.Online
+        }
+        this.userProvider.createUser(user).then((data2) => {
+          console.log(`createUser: ${data2}`);
+        }).catch((error2) => {
+          console.log(`error on createUser: ${error2}`);
+        });
+      }
+      this.navCtrl.setRoot(HomePage);
+    }).catch((error) => {
+      console.log(`error on loginWithFacebook: ${error}`);
     });
   }
 
