@@ -14,6 +14,18 @@ import { ProfilePageModule } from '../pages/profile/profile.module';
 import { AboutPageModule } from '../pages/about/about.module';
 import { UserProvider } from '../providers/user';
 import { SearchPipe } from '../pipes/search';
+import { AngularFireModule } from "angularfire2";
+import { AngularFireDatabaseModule, AngularFireDatabase } from "angularfire2/database";
+import { AngularFireAuthModule } from "angularfire2/auth";
+
+export const firebaseConfig = {
+  apiKey: "AIzaSyAzQa9hP3qK8W6QVjRLSp049I9Wpb0GoUY",
+  authDomain: "platzinger-4a1ef.firebaseapp.com",
+  databaseURL: "https://platzinger-4a1ef.firebaseio.com",
+  projectId: "platzinger-4a1ef",
+  storageBucket: "platzinger-4a1ef.appspot.com",
+  messagingSenderId: "556223442532"
+};
 
 @NgModule({
   declarations: [
@@ -28,7 +40,10 @@ import { SearchPipe } from '../pipes/search';
     LoginPageModule,
     ConversationPageModule,
     ProfilePageModule,
-    AboutPageModule
+    AboutPageModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -39,6 +54,7 @@ import { SearchPipe } from '../pipes/search';
   providers: [
     StatusBar,
     SplashScreen,
+    AngularFireDatabase,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserProvider
   ]
