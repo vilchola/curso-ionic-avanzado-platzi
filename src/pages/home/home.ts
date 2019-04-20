@@ -15,7 +15,12 @@ export class HomePage {
   status: Status;
 
   constructor(public navCtrl: NavController, private userProvider: UserProvider) {
-    this.friends = this.userProvider.getFriends();
+    this.userProvider.getUsers().valueChanges()
+      .subscribe((data: User[]) => {
+        this.friends = data;
+      }, (error) => {
+        console.log(`error on getUsers: ${error}`);
+      });
   }
 
   goToConversation(user: User) {

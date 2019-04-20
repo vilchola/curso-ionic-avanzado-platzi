@@ -18,16 +18,21 @@ import { UserProvider } from '../../providers/user';
 export class ConversationPage {
 
   friendId: any;
-  friends: User[];
   friend: User;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider) {
-    this.friendId = navParams.data.user.uid || undefined;
+    /*this.friendId = navParams.data.user.uid || undefined;
     console.log(`friendId: ${this.friendId}`);
-    this.friends = this.userProvider.getFriends();
-    this.friend = this.friends.find((record) => {
-      return record.uid == this.friendId;
-    });
+    
+    this.userProvider.getUserById(this.friendId).valueChanges()
+      .subscribe((data: User) => {
+        this.friend = data;
+      }, (error) => {
+        console.log(`error on getUserById: ${error}`);
+      });
+    console.log(`friend: ${this.friend}`);*/
+
+    this.friend = navParams.data.user || {};
     console.log(`friend: ${JSON.stringify(this.friend)}`);
   }
 
