@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { ConversationPage } from '../conversation/conversation';
 import { User, Status } from '../../interfaces/user';
 import { UserProvider } from '../../providers/user';
+import { AuthProvider } from '../../providers/auth';
 
 @Component({
   selector: 'page-home',
@@ -13,14 +14,23 @@ export class HomePage {
   friends: User[];
   query: string;
   status: Status;
+  user: User;
 
-  constructor(public navCtrl: NavController, private userProvider: UserProvider) {
-    this.userProvider.getUsers().valueChanges()
-      .subscribe((data: User[]) => {
+  constructor(public navCtrl: NavController, private userProvider: UserProvider, private authProvider: AuthProvider) {
+    this.authProvider.getStatus().subscribe((data) => {
+      this.userProvider.getUserById(data.uid).valueChanges().subscribe((data: User) => {
+        this.user = data;
+      }, (error) => {
+        console.log(`error on getUserById: ${error}`);
+      });
+      this.userProvider.getUsers().valueChanges().subscribe((data: User[]) => {
         this.friends = data;
       }, (error) => {
         console.log(`error on getUsers: ${error}`);
       });
+    }, (error) => {
+      console.log(`error on getStatus: ${error}`);
+    });
   }
 
   goToConversation(user: User) {

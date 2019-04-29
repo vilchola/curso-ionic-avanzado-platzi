@@ -14,7 +14,7 @@
 
 <ion-content padding class="backgroundPlatzinger">
 
-  <ion-grid id="homeMeContainer">
+  <ion-grid id="homeMeContainer" *ngIf="user">
     <ion-row>
       <ion-col col-3>
         <div class="avatarFrameOnline">
@@ -22,9 +22,9 @@
         </div>
       </ion-col>
       <ion-col col-9>
-        Henry Vilchez<br/>
-        <small>@vilchola</small><br/>
-        <small><b>roberto1286@gmail.com</b></small><br/>
+        {{ user.nick }}<br/>
+        <small>{{ user.subnick }}</small><br/>
+        <small><b>{{ user.email }}</b></small><br/>
       </ion-col>
     </ion-row>
   </ion-grid>
