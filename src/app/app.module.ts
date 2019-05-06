@@ -18,6 +18,7 @@ import { AngularFireModule } from "angularfire2";
 import { AngularFireDatabaseModule, AngularFireDatabase } from "angularfire2/database";
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { AuthProvider } from '../providers/auth';
+import { Camera } from '@ionic-native/camera';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAzQa9hP3qK8W6QVjRLSp049I9Wpb0GoUY",
@@ -58,7 +59,8 @@ export const firebaseConfig = {
     AngularFireDatabase,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserProvider,
-    AuthProvider
+    AuthProvider,
+    Camera
   ]
 })
 export class AppModule {}

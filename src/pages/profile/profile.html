@@ -26,6 +26,14 @@
       </ion-col>
     </ion-row>
   </div>
+  <div>
+    <button ion-button (click)="takePicture('camera')">
+      <ion-icon name="camera"></ion-icon>
+    </button>
+    <button ion-button (click)="takePicture('album')">
+      <ion-icon name="images"></ion-icon>
+    </button>
+  </div>
   <ion-list *ngIf="user">
     <ion-item>
       <ion-label fixed>Nick</ion-label>
