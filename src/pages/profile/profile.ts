@@ -5,6 +5,8 @@ import { AuthProvider } from '../../providers/auth';
 import { UserProvider } from '../../providers/user';
 import { HomePage } from '../home/home';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Geolocation } from '@ionic-native/geolocation';
+import { HttpClient } from '@angular/common/http';
 
 /**
  * Generated class for the ProfilePage page.
@@ -23,7 +25,7 @@ export class ProfilePage {
   user: User;
   pictureId: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private authProvider: AuthProvider, private userProvider: UserProvider, private camera: Camera, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private authProvider: AuthProvider, private userProvider: UserProvider, private camera: Camera, private toastCtrl: ToastController, private geolocation: Geolocation, private httpClient: HttpClient) {
     this.authProvider.getStatus().subscribe((data) => {
       this.userProvider.getUserById(data.uid).valueChanges().subscribe((data: User) => {
         this.user = data;
@@ -83,6 +85,20 @@ export class ProfilePage {
     } catch (e) {
       console.error(e);
     }
+  }
+
+  getLocation() {
+    this.geolocation.getCurrentPosition().then((response) => {
+      console.log(response);
+      let toast = this.toastCtrl.create({
+        message: 'Latitud: ' + response.coords.latitude + ' / Longitud: ' + response.coords.longitude,
+        duration: 3000,
+        position: 'bottom'
+      });
+      toast.present();
+    }).catch((error) => {
+      console.log(`error on getCurrentPosition: ${error}`);
+    });
   }
 
 }
