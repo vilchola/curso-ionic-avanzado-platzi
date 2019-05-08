@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireStorage } from 'angularfire2/storage';
 
 /*
   Generated class for the UserProvider provider.
@@ -10,7 +11,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 @Injectable()
 export class UserProvider {
 
-  constructor(private afDB: AngularFireDatabase) {
+  constructor(private afDB: AngularFireDatabase, private afStorage: AngularFireStorage) {
   }
 
   getUsers() {
@@ -27,6 +28,14 @@ export class UserProvider {
 
   editUser(user) {
     return this.afDB.database.ref('/users/' + user.uid).set(user);
+  }
+
+  uploadPicture(picture_name, image) {
+    return this.afStorage.ref('/pictures/' + picture_name).putString(image, 'data_url');
+  }
+
+  getDownloadURL(picture_name) {
+    return this.afStorage.ref('/pictures/' + picture_name).getDownloadURL();
   }
 
 }

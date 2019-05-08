@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { User } from '../../interfaces/user';
 import { AuthProvider } from '../../providers/auth';
 import { UserProvider } from '../../providers/user';
@@ -21,8 +21,9 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 export class ProfilePage {
 
   user: User;
+  pictureId: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private authProvider: AuthProvider, private userProvider: UserProvider, private camera: Camera) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private authProvider: AuthProvider, private userProvider: UserProvider, private camera: Camera, private toastCtrl: ToastController) {
     this.authProvider.getStatus().subscribe((data) => {
       this.userProvider.getUserById(data.uid).valueChanges().subscribe((data: User) => {
         this.user = data;
@@ -63,7 +64,22 @@ export class ProfilePage {
       cameraOptions.sourceType = (source === 'camera') ? this.camera.PictureSourceType.CAMERA : this.camera.PictureSourceType.PHOTOLIBRARY;
       const result = await this.camera.getPicture(cameraOptions);
       const image = 'data:image/jpeg;base64,' + result;
-      console.log(image);
+      this.pictureId = Date.now();
+      this.userProvider.uploadPicture(this.pictureId + '.jpg', image).then((data) => {
+        this.userProvider.getDownloadURL(this.pictureId + '.jpg').subscribe((url) => {
+          this.user.avatar = url;
+          let toast = this.toastCtrl.create({
+            message: 'Foto subida',
+            duration: 3000,
+            position: 'bottom'
+          });
+          toast.present();
+        }, (error) => {
+          console.log(`error on getDownloadURL: ${error}`);
+        });
+      }).catch((error) => {
+        console.log(`error on uploadPicture: ${error}`);
+      });
     } catch (e) {
       console.error(e);
     }

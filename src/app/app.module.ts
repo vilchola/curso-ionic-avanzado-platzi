@@ -17,6 +17,7 @@ import { SearchPipe } from '../pipes/search';
 import { AngularFireModule } from "angularfire2";
 import { AngularFireDatabaseModule, AngularFireDatabase } from "angularfire2/database";
 import { AngularFireAuthModule } from "angularfire2/auth";
+import { AngularFireStorageModule } from "angularfire2/storage";
 import { AuthProvider } from '../providers/auth';
 import { Camera } from '@ionic-native/camera';
 
@@ -45,7 +46,8 @@ export const firebaseConfig = {
     AboutPageModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireStorageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
