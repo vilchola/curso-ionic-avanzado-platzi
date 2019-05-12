@@ -4,6 +4,7 @@ import { User } from '../../interfaces/user';
 import { AuthProvider } from '../../providers/auth';
 import { UserProvider } from '../../providers/user';
 import { ConversationProvider } from '../../providers/conversation';
+import { Vibration } from '@ionic-native/vibration';
 
 /**
  * Generated class for the ConversationPage page.
@@ -24,8 +25,9 @@ export class ConversationPage {
   conversationId: any;
   message: string;
   conversation: any;
+  shake: boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public authProvider: AuthProvider, public userProvider: UserProvider, public conversationProvier: ConversationProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public authProvider: AuthProvider, public userProvider: UserProvider, public conversationProvier: ConversationProvider, public vibration: Vibration) {
     this.friend = this.navParams.data.user;
     this.authProvider.getStatus().subscribe((data) => {
       this.userProvider.getUserById(data.uid).valueChanges().subscribe((user: User) => {
@@ -56,6 +58,31 @@ export class ConversationPage {
     };
     this.conversationProvier.add(messageObject).then((data) => {
       this.message = '';
+    }).catch((error) => {
+      console.log(`error on add: ${error}`);
+    });
+  }
+
+  doZumbido() {
+    const audio = new Audio('assets/sound/zumbido.m4a');
+    audio.play();
+    this.shake = true;
+    this.vibration.vibrate([200, 80, 150]);
+    window.setTimeout(() => {
+      this.shake = false;
+    }, 800);
+  }
+
+  sendZumbido() {
+    const messageObject: any = {
+      uid: this.conversationId,
+      timestamp: Date.now(),
+      sender: this.user.uid,
+      receiver: this.friend.uid,
+      type: 'zumbido'
+    };
+    this.conversationProvier.add(messageObject).then((data) => {
+      this.doZumbido();
     }).catch((error) => {
       console.log(`error on add: ${error}`);
     });

@@ -23,6 +23,7 @@ import { Camera } from '@ionic-native/camera';
 import { Geolocation } from '@ionic-native/geolocation';
 import { HttpClientModule } from '@angular/common/http';
 import { ConversationProvider } from '../providers/conversation';
+import { Vibration } from '@ionic-native/vibration';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAzQa9hP3qK8W6QVjRLSp049I9Wpb0GoUY",
@@ -68,7 +69,8 @@ export const firebaseConfig = {
     AuthProvider,
     Camera,
     Geolocation,
-    ConversationProvider
+    ConversationProvider,
+    Vibration
   ]
 })
 export class AppModule {}

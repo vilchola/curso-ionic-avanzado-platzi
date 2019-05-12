@@ -18,11 +18,11 @@
 </ion-header>
 
 
-<ion-content padding class="backgroundPlatzinger">
+<ion-content padding class="backgroundPlatzinger" [ngClass]="{'shaker': shake}">
   <ion-fab right middle>
     <button ion-fab><ion-icon name="send"></ion-icon></button>
     <ion-fab-list side="top">
-      <button outline ion-fab><img src="assets/img/zumbido.png"></button>
+      <button outline ion-fab (click)="sendZumbido()"><img src="assets/img/zumbido.png"></button>
     </ion-fab-list>
     <ion-fab-list side="bottom">
       <button color="dark" ion-fab><ion-icon name="camera"></ion-icon></button>
@@ -30,7 +30,12 @@
     </ion-fab-list>
   </ion-fab>
   <div class="message" *ngFor="let m of conversation">
-    <b>{{ getUserNickById(m.sender) }}</b> dice: {{ m.content }}
+    <div *ngIf="m.type === 'text'">
+      <b>{{ getUserNickById(m.sender) }}</b> dice: {{ m.content }}
+    </div>
+    <div *ngIf="m.type === 'zumbido'">
+      <b>{{ getUserNickById(m.sender) }}</b> ha enviado un zumbido
+    </div>
   </div>
 </ion-content>
 
