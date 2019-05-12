@@ -7,7 +7,12 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ friend.nick }}</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title *ngIf="friend">
+      <span class="userName">{{ friend.nick }}</span> ({{ friend.status }})
+    </ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -24,13 +29,16 @@
       <button color="dark" ion-fab><ion-icon name="images"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
+  <div class="message" *ngFor="let m of conversation">
+    <b>{{ getUserNickById(m.sender) }}</b> dice: {{ m.content }}
+  </div>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
-    <ion-input type="text" class="footbarInput" placeholder="Escribe un mensaje" autofocus></ion-input>
+    <ion-input [(ngModel)]="message" type="text" class="footbarInput" (keyup.enter)="sendMessage()" placeholder="Escribe un mensaje" autofocus></ion-input>
     <ion-buttons end>
-      <button ion-button icon-only color="royal">
+      <button ion-button icon-only color="royal" (click)="sendMessage()">
         <ion-icon name="send"></ion-icon>
       </button>
     </ion-buttons>
