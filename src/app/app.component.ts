@@ -37,6 +37,12 @@ export class MyApp {
     ];
 
     this.authProvider.getStatus().subscribe((session) => {
+      if (!session) {
+        return;
+      }
+      if (!session.uid) {
+        return;
+      }
       this.userProvider.getUserById(session.uid).valueChanges().subscribe((user: User) => {
         this.user = user;
         this.getFriendRequests();

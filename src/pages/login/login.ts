@@ -45,10 +45,11 @@ export class LoginPage {
     this.authProvider.registerWithEmail(this.email, this.password).then((data) => {
       console.log(`registerWithEmail: ${data}`);
       const user = {
-        uid: data.user.uid,
         nick: this.nick,
-        email: this.email,
-        status: this.status
+        active: true,
+        status: this.status,
+        uid: data.user.uid,
+        email: this.email
       };
       this.userProvider.createUser(user).then((data2) => {
         console.log(`createUser: ${data2}`);
@@ -67,10 +68,10 @@ export class LoginPage {
       if (data.additionalUserInfo.isNewUser) {
         const user:User = {
           nick: data.additionalUserInfo.profile.first_name + ' ' + data.additionalUserInfo.profile.last_name,
-          email: data.additionalUserInfo.profile.email,
-          friend: false,
+          active: true,
+          status: Status.Online,
           uid: data.user.uid,
-          status: Status.Online
+          email: data.additionalUserInfo.profile.email
         }
         this.userProvider.createUser(user).then((data2) => {
           console.log(`createUser: ${data2}`);

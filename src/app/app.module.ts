@@ -25,6 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ConversationProvider } from '../providers/conversation';
 import { Vibration } from '@ionic-native/vibration';
 import { RequestProvider } from '../providers/request';
+import { FriendComponent } from '../components/friend/friend';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAzQa9hP3qK8W6QVjRLSp049I9Wpb0GoUY",
@@ -40,7 +41,8 @@ export const firebaseConfig = {
     MyApp,
     HomePage,
     ListPage,
-    SearchPipe
+    SearchPipe,
+    FriendComponent
   ],
   imports: [
     BrowserModule,

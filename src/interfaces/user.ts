@@ -10,9 +10,10 @@ export interface User {
     nick: string;
     subnick?: string;
     age?: number;
-    email: string;
-    friend: boolean;
-    uid: any;
+    active: boolean;
     status: Status;
+    uid: any;
+    email: string;
     avatar?: string;
+    friends?: any;
 }

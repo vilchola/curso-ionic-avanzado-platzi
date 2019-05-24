@@ -34,15 +34,13 @@
     <ion-input type="search" id="searchField" placeholder="Buscar..." [(ngModel)]="query"></ion-input>
   </div>
 
-  <div>
+  <div *ngIf="user && user.friends">
     <ion-list>
       <ion-list-header>
-        <b>Amigos</b>
+        <b>Amigos ({{user.friends.length}}/{{user.friends.length}})</b>
       </ion-list-header>
-      <ion-item class="contact-list-item" [ngClass]="{'contact-offline': isOffline(user.status)}" [ngStyle]="{'color': isOffline(user.status) ? 'red' : 'blue'}" *ngFor="let user of friends | search: query" (click)="goToConversation(user)">
-        <img src="assets/img/{{getIconByStatus(user.status)}}" class="status">
-        <b>{{user.nick}}</b> <i class="msnicon brb"></i>
-        <small *ngIf="user.status" item-end>{{ user.status }}</small>
+      <ion-item *ngFor="let user of user.friends | search: query">
+        <friend [uid]="user"></friend>
       </ion-item>
     </ion-list>
   </div>

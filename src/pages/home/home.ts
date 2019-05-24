@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, ToastController } from 'ionic-angular';
-import { ConversationPage } from '../conversation/conversation';
 import { User, Status } from '../../interfaces/user';
 import { UserProvider } from '../../providers/user';
 import { AuthProvider } from '../../providers/auth';
@@ -18,50 +17,28 @@ export class HomePage {
   user: User;
 
   constructor(public navCtrl: NavController, private userProvider: UserProvider, private authProvider: AuthProvider, private alertCtrl: AlertController, private requestProvider: RequestProvider, public toasrCtrl: ToastController) {
-    this.authProvider.getStatus().subscribe((data) => {
-      this.userProvider.getUserById(data.uid).valueChanges().subscribe((data: User) => {
-        this.user = data;
+    this.userProvider.getUsers().valueChanges().subscribe((data: User[]) => {
+      this.friends = data;
+    }, (error) => {
+      console.log(`error on getUsers: ${error}`);
+    });
+    this.authProvider.getStatus().subscribe((session) => {
+      if (!session) {
+        return;
+      }
+      if (!session.uid) {
+        return;
+      }
+      this.userProvider.getUserById(session.uid).valueChanges().subscribe((user: User) => {
+        this.user = user;
+        this.user.friends = Object.keys(this.user.friends).map(key => this.user.friends[key]);
+        console.log('user', this.user);
       }, (error) => {
         console.log(`error on getUserById: ${error}`);
-      });
-      this.userProvider.getUsers().valueChanges().subscribe((data: User[]) => {
-        this.friends = data;
-      }, (error) => {
-        console.log(`error on getUsers: ${error}`);
       });
     }, (error) => {
       console.log(`error on getStatus: ${error}`);
     });
-  }
-
-  goToConversation(user: User) {
-    this.navCtrl.push(ConversationPage, {user: user});
-  }
-
-  getIconByStatus(status) {
-    let icon = '';
-    switch (status) {
-      case Status.Online:
-        icon = 'logo_live_online.png';
-        break;
-      case Status.Offline:
-        icon = 'logo_live_offline.png';
-        break;
-      case Status.Busy:
-        icon = 'logo_live_busy.png';
-        break;
-      case Status.AppearOffline:
-        icon = 'logo_live_appear_offline.png';
-        break;
-      case Status.Away:
-        icon = 'logo_live_away.png';
-        break;
-    }
-    return icon;
-  }
-
-  isOffline(status) {
-    return status == Status.Offline || status == Status.AppearOffline;
   }
 
   sendRequest() {
