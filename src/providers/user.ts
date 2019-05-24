@@ -38,4 +38,9 @@ export class UserProvider {
     return this.afStorage.ref('/pictures/' + picture_name).getDownloadURL();
   }
 
+  addFriend(uid, friendId) {
+    this.afDB.object('/users/' + uid + '/friends/' + friendId).set(friendId);
+    return this.afDB.object('/users/' + friendId + '/friends/' + uid).set(uid);
+  }
+
 }
